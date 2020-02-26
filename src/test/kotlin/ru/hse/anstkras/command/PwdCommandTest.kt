@@ -2,6 +2,7 @@ package ru.hse.anstkras.command
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import ru.hse.anstkras.environment.Environment
 import java.io.ByteArrayOutputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -13,7 +14,11 @@ internal class PwdCommandTest {
     fun testPwd() {
         val pwdCommand = PwdCommand()
         val byteArrayOutputStream = ByteArrayOutputStream()
-        pwdCommand.execute(InputStreamReader(System.`in`), OutputStreamWriter(byteArrayOutputStream, UTF_8))
+        pwdCommand.execute(
+            InputStreamReader(System.`in`),
+            OutputStreamWriter(byteArrayOutputStream, UTF_8),
+            Environment(Paths.get(""))
+        )
         assertEquals(
             Paths.get("").toAbsolutePath().toString() + System.lineSeparator(),
             byteArrayOutputStream.toString(UTF_8)

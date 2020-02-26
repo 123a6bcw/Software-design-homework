@@ -1,5 +1,6 @@
 package ru.hse.anstkras.command
 
+import ru.hse.anstkras.environment.Environment
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -9,7 +10,11 @@ import java.io.OutputStreamWriter
  * ProcessBuilder is used
  */
 class UnknownCommand(private val command: String) : Command {
-    override fun execute(inputStreamReader: InputStreamReader, outputStreamWriter: OutputStreamWriter): Int {
+    override fun execute(
+        inputStreamReader: InputStreamReader,
+        outputStreamWriter: OutputStreamWriter,
+        environment: Environment
+    ): Int {
         val processBuilder = ProcessBuilder()
         processBuilder.command(command.split(" "))
         val process = processBuilder.start()

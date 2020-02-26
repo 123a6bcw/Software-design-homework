@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.hse.anstkras.command.CdCommandTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-02-26T04:12:55" hostname="ralsei21" time="0.038">
+  <properties/>
+  <testcase name="testCdCorrectWithArguments()" classname="ru.hse.anstkras.command.CdCommandTest" time="0.033"/>
+  <testcase name="testCdIncorrectArgument()" classname="ru.hse.anstkras.command.CdCommandTest" time="0.002"/>
+  <testcase name="testLsCorrectWithoutArgument()" classname="ru.hse.anstkras.command.CdCommandTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

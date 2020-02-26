@@ -2,6 +2,7 @@ package ru.hse.anstkras.command
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import ru.hse.anstkras.environment.Environment
 import java.io.*
 
 internal class WcCommandTest {
@@ -12,7 +13,7 @@ internal class WcCommandTest {
         val text = "text123 !@#$%^&*()_=${System.lineSeparator()}line2"
         file.writeText(text)
         val byteArrayOutputStream = ByteArrayOutputStream()
-        wcCommand.execute(InputStreamReader(FileInputStream(file)), OutputStreamWriter(byteArrayOutputStream, Charsets.UTF_8))
+        wcCommand.execute(InputStreamReader(FileInputStream(file)), OutputStreamWriter(byteArrayOutputStream, Charsets.UTF_8), Environment())
         file.delete()
         assertEquals("2 3 25" + System.lineSeparator(), byteArrayOutputStream.toString(Charsets.UTF_8))
     }

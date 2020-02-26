@@ -2,6 +2,7 @@ package ru.hse.anstkras.command
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import ru.hse.anstkras.environment.Environment
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
@@ -11,7 +12,8 @@ internal class ExitCommandTest {
         assertThrows<ExitException> {
             ExitCommand().execute(
                 InputStreamReader(System.`in`),
-                OutputStreamWriter(System.out)
+                OutputStreamWriter(System.out),
+                Environment()
             )
         }
     }

@@ -3,6 +3,7 @@ package ru.hse.anstkras.command
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import ru.hse.anstkras.environment.Environment
 import java.io.*
 
 internal class GrepCommandTest {
@@ -14,7 +15,7 @@ internal class GrepCommandTest {
         val fileText = expectedText + "line4"
         file.writeText(fileText)
         val byteArrayOutputStream = ByteArrayOutputStream()
-        grepCommand.execute(InputStreamReader(FileInputStream(file)), OutputStreamWriter(byteArrayOutputStream, Charsets.UTF_8))
+        grepCommand.execute(InputStreamReader(FileInputStream(file)), OutputStreamWriter(byteArrayOutputStream, Charsets.UTF_8), Environment())
         file.delete()
         assertEquals(expectedText, byteArrayOutputStream.toString(Charsets.UTF_8))
     }

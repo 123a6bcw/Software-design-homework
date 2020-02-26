@@ -21,7 +21,7 @@ class CommandLineParser(private val environment: Environment) : CommandParserBas
             if (ctx.line().isEmpty()) {
                 commandBuilder.outputStreamWriter(OutputStreamWriter(System.out))
                 pipeline.addCommandLast(commandBuilder)
-                return CommandBuilder().commandStrategy(pipeline)
+                return CommandBuilder(environment).commandStrategy(pipeline)
             }
 
             pipeline.addCommandLast(commandBuilder)
@@ -39,24 +39,24 @@ class CommandLineParser(private val environment: Environment) : CommandParserBas
                 line = line.line(0)
             }
 
-            return CommandBuilder().commandStrategy(pipeline)
+            return CommandBuilder(environment).commandStrategy(pipeline)
         }
     }
 
     override fun visitPwdCommand(ctx: CommandParserParser.PwdCommandContext?): CommandBuilder {
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(PwdCommand())
     }
 
     override fun visitEchoCommand(ctx: CommandParserParser.EchoCommandContext): CommandBuilder {
         val args = ctx.strings.joinToString(separator = " ") { it.text.trim('"', '\'') }
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(EchoCommand())
                 .inputStreamReader(getInputStreamReaderFromString(args))
     }
 
     override fun visitCatCommand(ctx: CommandParserParser.CatCommandContext): CommandBuilder {
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(CatCommand())
                 .inputStreamReader(getInputStreamReaderFromFile(ctx.getFileName()))
                 .shouldCloseInputStream()
@@ -64,28 +64,28 @@ class CommandLineParser(private val environment: Environment) : CommandParserBas
 
     override fun visitWcCommand(ctx: CommandParserParser.WcCommandContext): CommandBuilder {
         if (ctx.STRING() == null) {
-            return CommandBuilder()
+            return CommandBuilder(environment)
                     .commandStrategy(WcCommand())
         }
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(WcCommand())
                 .inputStreamReader(getInputStreamReaderFromFile(ctx.getFileName()))
                 .shouldCloseInputStream()
     }
 
     override fun visitExitCommand(ctx: CommandParserParser.ExitCommandContext?): CommandBuilder {
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(ExitCommand())
     }
 
     override fun visitAssignment(ctx: CommandParserParser.AssignmentContext): CommandBuilder {
         environment.setValue(ctx.getVariable(), ctx.getValue())
-        return CommandBuilder()
+        return CommandBuilder(environment)
                 .commandStrategy(Pipeline())
     }
 
     override fun visitUnknown(ctx: CommandParserParser.UnknownContext): CommandBuilder {
-        return CommandBuilder().commandStrategy(
+        return CommandBuilder(environment).commandStrategy(
                 UnknownCommand(
                         ctx.UNKNOWN()?.toString() ?: ctx.STRING().toString()
                 )
@@ -95,12 +95,16 @@ class CommandLineParser(private val environment: Environment) : CommandParserBas
     override fun visitGrepCommand(ctx: CommandParserParser.GrepCommandContext): CommandBuilder {
         val grepLine = ctx.GREP().toString()
         val grepCommand = GrepCommand(grepLine)
-        val commandBuilder = CommandBuilder().commandStrategy(grepCommand)
+        val commandBuilder = CommandBuilder(environment).commandStrategy(grepCommand)
         if (grepCommand.hasFileName()) {
             commandBuilder.inputStreamReader(getInputStreamReaderFromFile(grepCommand.getFileName()))
                     .shouldCloseInputStream()
         }
         return commandBuilder
+    }
+
+    private fun getInputStreamReaderFromFile(fileName: String): InputStreamReader {
+        return InputStreamReader(FileInputStream(environment.getPath(fileName).toFile()), UTF_8)
     }
 }
 
@@ -122,10 +126,6 @@ private fun CommandParserParser.CatCommandContext.getFileName(): String {
 
 private fun CommandParserParser.WcCommandContext.getFileName(): String {
     return this.STRING().toString().trim('"', '\'')
-}
-
-private fun getInputStreamReaderFromFile(fileName: String): InputStreamReader {
-    return InputStreamReader(FileInputStream(fileName), UTF_8)
 }
 
 private fun getInputStreamReaderFromString(string: String): InputStreamReader {

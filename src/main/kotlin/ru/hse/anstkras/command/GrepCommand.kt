@@ -1,5 +1,6 @@
 package ru.hse.anstkras.command
 
+import ru.hse.anstkras.environment.Environment
 import ru.hse.anstkras.grep.Grep
 import ru.hse.anstkras.grep.GrepLineSplitter
 import java.io.InputStreamReader
@@ -25,7 +26,11 @@ class GrepCommand(arguments: String) : Command {
         }
     }
 
-    override fun execute(inputStreamReader: InputStreamReader, outputStreamWriter: OutputStreamWriter): Int {
+    override fun execute(
+        inputStreamReader: InputStreamReader,
+        outputStreamWriter: OutputStreamWriter,
+        environment: Environment
+    ): Int {
         val regex = getRegex()
         var linesToPrint = 0
         inputStreamReader.forEachLine {

@@ -1,5 +1,6 @@
 package ru.hse.anstkras.command
 
+import ru.hse.anstkras.environment.Environment
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
@@ -7,7 +8,7 @@ import java.io.OutputStreamWriter
  *  Class for building a command that is used when it is not possible to
  * know all the details at once
  */
-class CommandBuilder {
+class CommandBuilder(val environment: Environment) {
     var commandStrategy: Command? = null
         private set
     var inputStreamReader: InputStreamReader? = null
@@ -65,7 +66,8 @@ class CommandBuilder {
             inputStreamReader!!,
             outputStreamWriter!!,
             shouldCloseInputStream,
-            shouldCloseOutputStream
+            shouldCloseOutputStream,
+            environment
         )
     }
 }

@@ -6,6 +6,7 @@ import ru.hse.anstkras.commandlineinterpretator.CommandLineInterpreter
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
+import java.nio.file.Paths
 
 internal class CommandLineParserTest {
     @Test
@@ -15,10 +16,11 @@ internal class CommandLineParserTest {
 
     @Test
     fun runPipeLine() {
-        val file = File("testCat.txt")
+        val filePath = Paths.get("./testCat.txt").toAbsolutePath().normalize()
+        val file = filePath.toFile()
         val text = "text123 !@#$%^&*()_=${System.lineSeparator()}line2"
         file.writeText(text)
-        checkOutput("cat testCat.txt | wc | wc", "1 3 6" + System.lineSeparator())
+        checkOutput("cat $filePath | wc | wc", "1 3 6" + System.lineSeparator())
         file.delete()
     }
 

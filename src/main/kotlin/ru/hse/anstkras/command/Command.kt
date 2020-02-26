@@ -1,5 +1,6 @@
 package ru.hse.anstkras.command
 
+import ru.hse.anstkras.environment.Environment
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
@@ -16,5 +17,9 @@ interface Command {
      * @throws IllegalStateException
      * @throws IOException
      */
-    fun execute(inputStreamReader: InputStreamReader, outputStreamWriter: OutputStreamWriter): Int
+    fun execute(
+        inputStreamReader: InputStreamReader,
+        outputStreamWriter: OutputStreamWriter,
+        environment: Environment
+    ): Int
 }

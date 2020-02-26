@@ -13,6 +13,8 @@ command
     | exitCommand
     | grepCommand
     | unknown
+    | cdCommand
+    | lsCommand
     ;
 
 assignment
@@ -51,6 +53,14 @@ grepCommand
     : GREP
     ;
 
+cdCommand
+    : CD STRING?
+    ;
+
+lsCommand
+    : LS STRING?
+    ;
+
 unknown
     : STRING
     | UNKNOWN
@@ -79,6 +89,13 @@ PWD
 
 EXIT
     : 'exit'
+    ;
+
+CD
+    : 'cd'
+    ;
+LS
+    : 'ls'
     ;
 
 STRING

@@ -2,6 +2,7 @@ package ru.hse.anstkras.command
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import ru.hse.anstkras.environment.Environment
 import java.io.ByteArrayOutputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -16,7 +17,8 @@ internal class PipelineCommandTest {
             echoCommand,
             InputStreamReader(text.byteInputStream(Charsets.UTF_8)),
             OutputStreamWriter(byteArrayOutputStream, Charsets.UTF_8)
-            , false, false
+            , shouldCloseInputStream = false, shouldCloseOutputStream = false,
+            environment = Environment()
         )
         pipelineCommand.execute()
         assertEquals(text + System.lineSeparator(), byteArrayOutputStream.toString(Charsets.UTF_8))

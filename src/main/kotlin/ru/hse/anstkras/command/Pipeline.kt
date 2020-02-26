@@ -1,5 +1,6 @@
 package ru.hse.anstkras.command
 
+import ru.hse.anstkras.environment.Environment
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStreamReader
@@ -13,7 +14,11 @@ import java.util.*
 class Pipeline : Command {
     private val commands: Deque<CommandBuilder> = LinkedList<CommandBuilder>()
     private var called = false
-    override fun execute(inputStreamReader: InputStreamReader, outputStreamWriter: OutputStreamWriter): Int {
+    override fun execute(
+        inputStreamReader: InputStreamReader,
+        outputStreamWriter: OutputStreamWriter,
+        environment: Environment
+    ): Int {
         if (called) {
             throw IllegalStateException("Pipeline called twice")
         }

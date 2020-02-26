@@ -9,7 +9,7 @@ mainClassName = 'ru.hse.anstkras.MainKt'
 group 'ru.hse.anstkras'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 12
 
 repositories {
     mavenCentral()
@@ -23,6 +23,7 @@ generateGrammarSource {
 
 run{
     standardInput = System.in
+    //standardOutput = System.out
 }
 
 compileJava.dependsOn generateGrammarSource

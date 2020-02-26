@@ -1,0 +1,21 @@
+T__0=1
+T__1=2
+GREP=3
+CAT=4
+ECHO=5
+WC=6
+PWD=7
+EXIT=8
+CD=9
+LS=10
+STRING=11
+UNKNOWN=12
+WS=13
+'|'=1
+'='=2
+'cat '=4
+'echo '=5
+'pwd'=7
+'exit'=8
+'cd'=9
+'ls'=10
