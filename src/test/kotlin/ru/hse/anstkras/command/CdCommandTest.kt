@@ -35,7 +35,7 @@ internal class CdCommandTest {
     @Test
     fun testCdCorrectWithArguments() {
         val expectedResult = "dir3"
-        runCd(resourcesPath + "/dir1/dir2", expectedResult, false)
+        runCd("$resourcesPath/dir1/dir2", expectedResult, false)
     }
 
     @Test
@@ -77,9 +77,11 @@ internal class CdCommandTest {
 
         if (!expectedIncorrect) {
             val lsCommand = LsCommand()
-            lsCommand.execute(InputStreamReader("".byteInputStream()),
+            lsCommand.execute(
+                InputStreamReader("".byteInputStream()),
                 OutputStreamWriter(byteArrayOutputStream, UTF_8),
-                environment)
+                environment
+            )
         }
 
         assertEquals(

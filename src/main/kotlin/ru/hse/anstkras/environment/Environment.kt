@@ -55,16 +55,7 @@ class Environment {
      *
      * @see Path.resolve
      */
-    fun getPath(anotherPath: Path): Path {
-        //TODO check if ploho
-        return currentPath.resolve(anotherPath)
-    }
-
-    /**
-     * @see getPath(Path)
-     */
     fun getPath(anotherPath: String): Path {
-        //TODO check if ploho
         return currentPath.resolve(anotherPath)
     }
 }
